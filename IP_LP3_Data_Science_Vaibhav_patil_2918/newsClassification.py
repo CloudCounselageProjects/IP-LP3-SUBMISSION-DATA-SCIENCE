@@ -1,0 +1,45 @@
+# import the neccessary modules
+import numpy as np
+import pandas as pd
+import itertools
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import PassiveAggressiveClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix,classification_report
+
+#Read the data
+data=pd.read_csv('news.csv')
+#Get shape and head
+print(data.shape)
+print(data.head())
+
+#DataFlair - Get the labels
+labels=data.label
+labels.head()
+
+#DataFlair - Split the dataset
+x_train,x_test,y_train,y_test=train_test_split(data['text'], labels, test_size=0.2, random_state=7)
+
+#DataFlair - Initialize a TfidfVectorizer
+vectorizer=TfidfVectorizer(stop_words='english', max_df=0.7)
+#DataFlair - Fit and transform train set, transform test set
+tfidf_train=vectorizer.fit_transform(x_train) 
+tfidf_test=vectorizer.transform(x_test)
+
+#DataFlair - Initialize a PassiveAggressiveClassifier
+pac=PassiveAggressiveClassifier(max_iter=50)
+pac.fit(tfidf_train,y_train)
+#DataFlair - Predict on the test set and calculate accuracy
+y_pred=pac.predict(tfidf_test)
+score=accuracy_score(y_test,y_pred)
+print(f'Accuracy: {round(score*100,2)}%')
+
+#print classification report
+
+print(classification_report(y_test,y_pred))
+l = pd.crosstab(y_test,y_pred)
+print(l)
+#DataFlair - Build confusion matrix
+print("\nconfusion matrix :: ")
+k = confusion_matrix(y_test,y_pred, labels=['FAKE','REAL'])
+print(k)
