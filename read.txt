@@ -1,0 +1,1 @@
+run the app.py file by typing "python app.py" in the CMD.
