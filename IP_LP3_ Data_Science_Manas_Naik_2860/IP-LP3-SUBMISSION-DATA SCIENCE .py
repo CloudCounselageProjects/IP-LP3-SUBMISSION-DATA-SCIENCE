@@ -4,8 +4,8 @@
 # In[1]:
 
 
-import os
-os.chdir("C:\\Users\manas\Downloads\DS")
+#import os
+#os.chdir("C:\\Users\manas\Downloads\DS")
 
 
 # In[2]:
@@ -13,12 +13,12 @@ os.chdir("C:\\Users\manas\Downloads\DS")
 
 import pandas as pd
 import numpy as np
-
+fname = input("Provide the path of the dataset file: ")
 
 # In[3]:
 
 
-ds = pd.read_csv("news.csv")
+ds = pd.read_csv(fname)
 
 
 # In[4]:
@@ -109,7 +109,7 @@ predicted = clf.predict(x_test1)
 # In[68]:
 
 
-accuracy_score(predicted,y_test)
+print("Accuracy Score: ",accuracy_score(predicted,y_test))
 
 
 # In[69]:
